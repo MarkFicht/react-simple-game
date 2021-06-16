@@ -1,0 +1,58 @@
+.board-wrapper {
+  width: 500px;
+  height: 650px;
+  display: grid;
+  margin: calc(50vh - 650px / 2) auto;
+  grid-template-rows: [header] 50px [score] 50px [tile-board] 500px [button] 50px;
+}
+
+.header-wrapper {
+  grid-row: header;
+  font-size: 20px;
+  line-height: 50px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.score-wrapper {
+  grid-row: score;
+  text-align: center;
+  font-size: 16px;
+  line-height: 50px;
+}
+
+.tile-board-wrapper {
+  grid-row: tile-board;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+.tile {
+  height: 47px;
+  width: 47px;
+  display: block;
+  border: 2px dashed tomato;
+  box-sizing: border-box;
+}
+
+.player-position {
+  background-color: red;
+}
+
+.point-position {
+  background-color: greenyellow;
+}
+
+.button-wrapper {
+  grid-row: button;
+}
+
+.button-wrapper > button {
+  width: 150px;
+  height: 30px;
+  margin-top: 10px;
+}
