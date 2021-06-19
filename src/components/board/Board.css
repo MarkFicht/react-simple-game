@@ -40,7 +40,6 @@
   display: block;
   background-color: thistle;
   border: 2px dashed tomato;
-  /* box-sizing: border-box; */
 }
 
 .tile-board-size-10 {
@@ -49,25 +48,33 @@
 }
 
 .player-position {
-  /* background-color: red; */
-  background-image: url("../../img/player.png");
+  background-image: url("../../img/player-goku.png");
   background-position: 0px 0px;
 }
 
 .player-position-right {
-  background-position: 0px 0px;
+  animation: base-right 0.13s steps(1) forwards;
 }
-
 .player-position-up {
-  background-position: 0px -56px;
+  animation: base-up 0.13s steps(1) forwards;
 }
-
 .player-position-left {
-  background-position: 0px -112px;
+  animation: base-left 0.13s steps(1) forwards;
 }
-
 .player-position-down {
-  background-position: 0px 56px;
+  animation: base-down 0.13s steps(1) forwards;
+}
+.player-position-right2 {
+  animation: base2-right 0.13s steps(1) forwards;
+}
+.player-position-up2 {
+  animation: base2-up 0.13s steps(1) forwards;
+}
+.player-position-left2 {
+  animation: base2-left 0.13s steps(1) forwards;
+}
+.player-position-down2 {
+  animation: base2-down 0.13s steps(1) forwards;
 }
 
 .point-position {
@@ -85,4 +92,76 @@
 .button-wrapper > button {
   width: 150px;
   height: 30px;
+}
+
+@keyframes base-right {
+  from {
+    background-position: 0px 0px;
+  }
+  to {
+    background-position: -56px 0px;
+  }
+}
+
+@keyframes base-up {
+  from {
+    background-position: 0px -56px;
+  }
+  to {
+    background-position: -56px -56px;
+  }
+}
+
+@keyframes base-left {
+  from {
+    background-position: 0px -112px;
+  }
+  to {
+    background-position: -56px -112px;
+  }
+}
+
+@keyframes base-down {
+  from {
+    background-position: 0px 56px;
+  }
+  to {
+    background-position: -56px 56px;
+  }
+}
+
+@keyframes base2-right {
+  from {
+    background-position: -112px 0px;
+  }
+  to {
+    background-position: 56px 0px;
+  }
+}
+
+@keyframes base2-up {
+  from {
+    background-position: -112px -56px;
+  }
+  to {
+    background-position: 56px -56px;
+  }
+}
+
+@keyframes base2-left {
+  from {
+    background-position: -112px -112px;
+  }
+  to {
+    background-position: 56px -112px;
+  }
+}
+
+@keyframes base2-down {
+  from {
+    background-position: -112px 56px;
+  }
+  to {
+    background-position: 56px 56px;
+  }
 }

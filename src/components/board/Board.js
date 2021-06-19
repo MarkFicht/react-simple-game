@@ -5,11 +5,11 @@ import Tile from '../tile/Tile'
 
 /**
  * TO DO
- * add gif / animation for change direction
  * add obstacles (7x7 f.e. 4 and 10x10 f.e. 6-7)
  * add styles
  * add a welcome page
  * add firebase for 'best scores'
+ * add 'special' effect, for progress in 'transform' player and progress in 'interval'
  */
 
 class Board extends React.Component {
@@ -156,6 +156,8 @@ class Board extends React.Component {
 
 			clearInterval(this.state.timerId);
 			this.setState({
+				score: 0,
+				bonusScore: 20,
 				startButtonTitle: "PLAY AGAIN",
 				playerPosition: [1, 1],
 				pointPosition: [0, 0],
@@ -239,7 +241,7 @@ class Board extends React.Component {
 
 	// --- RENDER -----
 	render() {
-		const { size, playerPosition, pointPosition, currentDirection } = this.state
+		const { size, playerPosition, pointPosition, currentDirection, score } = this.state
 		const tileBoard = [];
 
 		for (let i = 1; i <= size.y; i++) {
@@ -250,6 +252,7 @@ class Board extends React.Component {
 					playerPosition={playerPosition[0] === j && playerPosition[1] === i}
 					pointPosition={pointPosition[0] === j && pointPosition[1] === i}
 					currentDirection={currentDirection}
+					score={score}
 				/>);
 			}
 		}

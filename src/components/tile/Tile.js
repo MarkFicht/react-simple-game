@@ -7,11 +7,14 @@ const Tile = (props) => {
         `tile 
         ${props.playerPosition && " player-position"} 
         ${props.pointPosition && " point-position"} 
-        ${props.currentDirection === "right" && " player-position-right"}
-        ${props.currentDirection === "up" && " player-position-up"}
-        ${props.currentDirection === "left" && " player-position-left"}
-        ${props.currentDirection === "down" && " player-position-down"}
-
+        ${props.currentDirection === "right" && props.score < 20 && " player-position-right"}
+        ${props.currentDirection === "up" && props.score < 20 && " player-position-up"}
+        ${props.currentDirection === "left" && props.score < 20 && " player-position-left"}
+        ${props.currentDirection === "down" && props.score < 20 && " player-position-down"}
+        ${props.currentDirection === "right" && props.score >= 20 && " player-position-right2"}
+        ${props.currentDirection === "up" && props.score >= 20 && " player-position-up2"}
+        ${props.currentDirection === "left" && props.score >= 20 && " player-position-left2"}
+        ${props.currentDirection === "down" && props.score >= 20 && " player-position-down2"}
         `
     }>
         {/* {`${x}/${y}`} */}
