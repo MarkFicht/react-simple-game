@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/react-simple-game/static/css/main.45f77eab.chunk.css",
-    "main.js": "/react-simple-game/static/js/main.ae911a3c.chunk.js",
-    "main.js.map": "/react-simple-game/static/js/main.ae911a3c.chunk.js.map",
+    "main.css": "/react-simple-game/static/css/main.9a09a3c6.chunk.css",
+    "main.js": "/react-simple-game/static/js/main.9067bc53.chunk.js",
+    "main.js.map": "/react-simple-game/static/js/main.9067bc53.chunk.js.map",
     "runtime-main.js": "/react-simple-game/static/js/runtime-main.4f0c0ac3.js",
     "runtime-main.js.map": "/react-simple-game/static/js/runtime-main.4f0c0ac3.js.map",
     "static/js/2.7ee191bf.chunk.js": "/react-simple-game/static/js/2.7ee191bf.chunk.js",
@@ -10,13 +10,14 @@
     "static/js/3.d7c1cc47.chunk.js": "/react-simple-game/static/js/3.d7c1cc47.chunk.js",
     "static/js/3.d7c1cc47.chunk.js.map": "/react-simple-game/static/js/3.d7c1cc47.chunk.js.map",
     "index.html": "/react-simple-game/index.html",
-    "static/css/main.45f77eab.chunk.css.map": "/react-simple-game/static/css/main.45f77eab.chunk.css.map",
-    "static/js/2.7ee191bf.chunk.js.LICENSE.txt": "/react-simple-game/static/js/2.7ee191bf.chunk.js.LICENSE.txt"
+    "static/css/main.9a09a3c6.chunk.css.map": "/react-simple-game/static/css/main.9a09a3c6.chunk.css.map",
+    "static/js/2.7ee191bf.chunk.js.LICENSE.txt": "/react-simple-game/static/js/2.7ee191bf.chunk.js.LICENSE.txt",
+    "static/media/Board.css": "/react-simple-game/static/media/player-goku.aac8d572.png"
   },
   "entrypoints": [
     "static/js/runtime-main.4f0c0ac3.js",
     "static/js/2.7ee191bf.chunk.js",
-    "static/css/main.45f77eab.chunk.css",
-    "static/js/main.ae911a3c.chunk.js"
+    "static/css/main.9a09a3c6.chunk.css",
+    "static/js/main.9067bc53.chunk.js"
   ]
 }
