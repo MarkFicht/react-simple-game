@@ -18,3 +18,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#root {
+  background-color: tomato;
+  text-align: center;
+  display: flex;
+  /* width: 100vw; */
+  height: 100vh;
+  min-height: 800px;
+  justify-content: center;
+  align-items: center;
+}

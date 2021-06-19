@@ -3,22 +3,35 @@ import './Board.css';
 
 import Tile from '../tile/Tile'
 
+/**
+ * TO DO
+ * add gif / animation for change direction
+ * add obstacles (7x7 f.e. 4 and 10x10 f.e. 6-7)
+ * add styles
+ * add a welcome page
+ * add firebase for 'best scores'
+ */
+
 class Board extends React.Component {
 
 	// --- React Steate
 	state = {
 		title: "React Simple Game",
+		startButtonTitle: "PLAY",
 		size: {
-			x: 10,
-			y: 10
+			x: 7,
+			y: 7
 		},
 		score: 0,
+		bonusScore: 20,
+		displayScore: 0,
 		playerPosition: [1, 1],
 		pointPosition: [0, 0],
-		currentDirection: null,
+		currentDirection: "right",
 		inGame: false,
 		gameOver: false,
-		timerId: null
+		gameSpeed: 220,
+		timerId: null,
 	}
 
 	// --- React cycle life methods
@@ -35,88 +48,104 @@ class Board extends React.Component {
 	// --- Start game
 	startGame = () => {
 		this.setState({
+			startButtonTitle: "IN GAME",
+			score: 0,
+			bonusScore: 20,
+			displayScore: 0,
+			playerPosition: [1, 1],
+			pointPosition: this.setPointPosition(),
+			currentDirection: "right",
 			inGame: true,
 			gameOver: false,
-			score: 0,
-			playerPosition: [1, 1],
-			pointPosition: [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1],
-			currentDirection: null,
+			gameSpeed: 220,
 		});
 
-		// By default, start to the right
 		this.startMoving();
 	}
 
 	// --- Move player
 	startMoving = () => {
+		clearInterval(this.state.timerId);
+
 		this.setState({
-			timerId: setInterval(() => {
-				console.log('Counting by 500ms');
-
-				switch (this.state.currentDirection) {
-					case "right":
-						this.moveRight();
-						break;
-
-					case "left":
-						this.moveLeft();
-						break;
-
-					case "up":
-						this.moveUp();
-						break;
-
-					case "down":
-						this.moveDown();
-						break;
-
-					default:
-						this.moveRight();
-						break;
-				}
-
-				this.checkCollision();
-				this.checkPoint();
-			}, 500)
+			timerId: setInterval(this.startInterval.bind(this), this.state.gameSpeed)
 		});
 	}
 
+	startInterval = () => {
+		console.log('Counting by ' + this.state.gameSpeed + ' ms.');
+
+		switch (this.state.currentDirection) {
+			case "right":
+				this.moveRight();
+				break;
+
+			case "left":
+				this.moveLeft();
+				break;
+
+			case "up":
+				this.moveUp();
+				break;
+
+			case "down":
+				this.moveDown();
+				break;
+
+			default:
+				this.moveRight();
+				break;
+		}
+
+		this.checkCollision();
+
+		if (!this.state.gameOver) {
+
+			this.checkPoint();
+			this.state.score <= 20 && this.setSpeedGame();
+		}
+	}
+
 	moveRight = () => {
-		const currentPosition = this.state.playerPosition;
-		++currentPosition[1];
-
-		this.setState({ playerPosition: currentPosition });
-	}
-
-	moveLeft = () => {
-		const currentPosition = this.state.playerPosition;
-		--currentPosition[1];
-
-		this.setState({ playerPosition: currentPosition });
-	}
-
-	moveUp = () => {
-		const currentPosition = this.state.playerPosition;
-		--currentPosition[0];
-
-		this.setState({ playerPosition: currentPosition });
-	}
-
-	moveDown = () => {
 		const currentPosition = this.state.playerPosition;
 		++currentPosition[0];
 
 		this.setState({ playerPosition: currentPosition });
 	}
 
+	moveLeft = () => {
+		const currentPosition = this.state.playerPosition;
+		--currentPosition[0];
+
+		this.setState({ playerPosition: currentPosition });
+	}
+
+	moveUp = () => {
+		const currentPosition = this.state.playerPosition;
+		--currentPosition[1];
+
+		this.setState({ playerPosition: currentPosition });
+	}
+
+	moveDown = () => {
+		const currentPosition = this.state.playerPosition;
+		++currentPosition[1];
+
+		this.setState({ playerPosition: currentPosition });
+	}
+
 	// --- Game mechanism
 	checkPoint = () => {
-		const { playerPosition, pointPosition, score } = this.state;
+		const { playerPosition, pointPosition, score, bonusScore, displayScore } = this.state;
+		this.setState({ bonusScore: bonusScore - 1 });
+
 		if (playerPosition[0] === pointPosition[0] && playerPosition[1] === pointPosition[1]) {
 
 			this.setState({
 				score: score + 1,
-				pointPosition: [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1]
+				bonusScore: 20,
+				displayScore: displayScore + score + bonusScore,
+				pointPosition: this.setPointPosition()
 			});
 		}
 	}
@@ -127,13 +156,66 @@ class Board extends React.Component {
 
 			clearInterval(this.state.timerId);
 			this.setState({
-				gameOver: true,
+				startButtonTitle: "PLAY AGAIN",
+				playerPosition: [1, 1],
+				pointPosition: [0, 0],
 				inGame: false,
-				timerId: null
+				gameOver: true,
+				gameSpeed: 220,
+				timerId: null,
 			});
 
-			alert(`GAME OVER. YOUR SCORE: ${this.state.score}`);
+			alert(`GAME OVER. YOUR SCORE: ${this.state.displayScore}`);
 		}
+	}
+
+	setSpeedGame = () => {
+		const { score } = this.state;
+
+		if (score === 3) {
+			this.setState({
+				gameSpeed: 200
+			});
+			this.startMoving();
+
+		} else if (score === 8) {
+			this.setState({
+				gameSpeed: 185
+			});
+			this.startMoving();
+
+		} else if (score === 15) {
+			this.setState({
+				gameSpeed: 160
+			});
+			this.startMoving();
+
+		} else if (score === 20) {
+			this.setState({
+				gameSpeed: 145
+			});
+			this.startMoving();
+		}
+	}
+
+	setPointPosition = () => {
+		const { pointPosition } = this.state
+		let newPosition = [];
+
+		do {
+			newPosition = [Math.floor(Math.random() * this.state.size.x) + 1, Math.floor(Math.random() * this.state.size.x) + 1];
+			console.log(" => ", newPosition);
+		} while (newPosition[0] === pointPosition[0] && newPosition[1] === pointPosition[1]);
+
+		return newPosition;
+	}
+
+	// ---
+	onChangeSize = (event) => {
+		const size = event.target.value.split('x');
+		this.setState({
+			size: { x: size[0] * 1, y: size[1] * 1 }
+		});
 	}
 
 	// --- keyboard controller
@@ -157,15 +239,17 @@ class Board extends React.Component {
 
 	// --- RENDER -----
 	render() {
+		const { size, playerPosition, pointPosition, currentDirection } = this.state
 		const tileBoard = [];
 
-		for (let i = 1; i <= this.state.size.x; i++) {
-			for (let j = 1; j <= this.state.size.y; j++) {
+		for (let i = 1; i <= size.y; i++) {
+			for (let j = 1; j <= size.x; j++) {
 				tileBoard.push(<Tile
-					id={{ x: i, y: j }}
-					key={`${i}/${j}`}
-					playerPosition={this.state.playerPosition[0] === i && this.state.playerPosition[1] === j}
-					pointPosition={this.state.pointPosition[0] === i && this.state.pointPosition[1] === j}
+					id={{ x: j, y: i }}
+					key={`${j}/${i}`}
+					playerPosition={playerPosition[0] === j && playerPosition[1] === i}
+					pointPosition={pointPosition[0] === j && pointPosition[1] === i}
+					currentDirection={currentDirection}
 				/>);
 			}
 		}
@@ -173,10 +257,33 @@ class Board extends React.Component {
 		return (
 			<main className="board-wrapper">
 				<header className="header-wrapper">{this.state.title}</header>
-				<section className="score-wrapper">SCORE: {this.state.score}</section>
-				<section className="tile-board-wrapper">{tileBoard}</section>
+				<section className="score-wrapper">Score: {this.state.displayScore}</section>
+				<section className="game-speed-wrapper">Game speed: {`${this.state.gameSpeed}ms`}</section>
+				<section className={`tile-board-wrapper ${size.x === 10 && size.y === 10 ? "tile-board-size-10" : ""}`}>{tileBoard}</section>
 				<section className="button-wrapper">
-					<button onClick={e => this.startGame()} disabled={this.state.inGame}>Play Again</button>
+					<button onClick={e => this.startGame()} disabled={this.state.inGame}>{this.state.startButtonTitle}</button>
+					<div>
+						<label>
+							<input
+								type="radio"
+								value="7x7"
+								disabled={this.state.inGame}
+								checked={size.x === 7 && size.y === 7}
+								onChange={this.onChangeSize}
+							/>
+							7 x 7
+						</label>
+						<label>
+							<input
+								type="radio"
+								value="10x10"
+								disabled={this.state.inGame}
+								checked={size.x === 10 && size.y === 10}
+								onChange={this.onChangeSize}
+							/>
+							10 x 10
+						</label>
+					</div>
 				</section>
 			</main>
 		);

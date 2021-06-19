@@ -1,9 +1,6 @@
 .board-wrapper {
-  width: 500px;
-  height: 650px;
   display: grid;
-  margin: calc(50vh - 650px / 2) auto;
-  grid-template-rows: [header] 50px [score] 50px [tile-board] 500px [button] 50px;
+  grid-template-rows: [header] 50px [score] 25px [speed] 25px [gap] 20px [tile-board] 1fr [gap] 20px [button] 60px;
 }
 
 .header-wrapper {
@@ -19,28 +16,58 @@
   grid-row: score;
   text-align: center;
   font-size: 16px;
-  line-height: 50px;
+  line-height: 25px;
+}
+
+.game-speed-wrapper {
+  grid-row: speed;
+  text-align: center;
+  font-size: 16px;
+  line-height: 25px;
 }
 
 .tile-board-wrapper {
   grid-row: tile-board;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
   display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.tile {
+  height: 55px;
+  width: 55px;
+  display: block;
+  background-color: thistle;
+  border: 2px dashed tomato;
+  /* box-sizing: border-box; */
+}
+
+.tile-board-size-10 {
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
 }
 
-.tile {
-  height: 47px;
-  width: 47px;
-  display: block;
-  border: 2px dashed tomato;
-  box-sizing: border-box;
+.player-position {
+  /* background-color: red; */
+  background-image: url("../../img/player.png");
+  background-position: 0px 0px;
 }
 
-.player-position {
-  background-color: red;
+.player-position-right {
+  background-position: 0px 0px;
+}
+
+.player-position-up {
+  background-position: 0px -56px;
+}
+
+.player-position-left {
+  background-position: 0px -112px;
+}
+
+.player-position-down {
+  background-position: 0px 56px;
 }
 
 .point-position {
@@ -49,10 +76,13 @@
 
 .button-wrapper {
   grid-row: button;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .button-wrapper > button {
   width: 150px;
   height: 30px;
-  margin-top: 10px;
 }
